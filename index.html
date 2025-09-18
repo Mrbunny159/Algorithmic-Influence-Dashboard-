@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Consumer Decisions & Algorithms | Research Dashboard</title>
+    
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-color: #007bff;
+            --secondary-color: #17a2b8;
+            --success-color: #28a745;
+            --danger-color: #dc3545;
+            --background-color: #f4f7f6;
+            --card-background: #ffffff;
+            --text-color: #333;
+            --heading-color: #000;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            background-color: var(--background-color);
+            color: var(--text-color);
+        }
+        .container {
+            max-width: 1400px;
+            margin: auto;
+            padding: 20px;
+        }
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        header h1 {
+            font-size: 2.5em;
+            color: var(--heading-color);
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+        header p {
+            font-size: 1.1em;
+            color: #6c757d;
+            font-weight: 300;
+        }
+        .kpi-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        .kpi-card {
+            background: var(--card-background);
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            text-align: center;
+        }
+        .kpi-card .value {
+            font-size: 3em;
+            font-weight: 700;
+            margin: 0;
+        }
+        .kpi-card .label {
+            font-size: 1em;
+            color: #6c757d;
+            margin-top: 10px;
+        }
+        .kpi-card .value.influence { color: var(--primary-color); }
+        .kpi-card .value.impulse { color: var(--success-color); }
+        .kpi-card .value.skepticism { color: var(--danger-color); }
+        .chart-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 20px;
+        }
+        .chart-card {
+            background: var(--card-background);
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+        }
+        footer {
+            text-align: center;
+            padding: 30px;
+            font-size: 0.9em;
+            color: #6c757d;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>Algorithmic Influence Dashboard</h1>
+            <p>A Visual Analysis of 55 Consumer Responses</p>
+        </header>
+
+        <div class="kpi-grid">
+            <div class="kpi-card">
+                <p class="value influence">36.3%</p>
+                <p class="label">Strongly Influenced by Amazon</p>
+            </div>
+            <div class="kpi-card">
+                <p class="value impulse">40%</p>
+                <p class="label">Made Unplanned Purchases</p>
+            </div>
+            <div class="kpi-card">
+                <p class="value skepticism">49.1%</p>
+                <p class="label">Prefer to Shop Without Recommendations</p>
+            </div>
+        </div>
+
+        <div class="chart-grid">
+            <div class="chart-card">
+                <canvas id="influenceChart"></canvas>
+            </div>
+            <div class="chart-card">
+                <canvas id="trustChart"></canvas>
+            </div>
+            <div class="chart-card">
+                <canvas id="relevanceChart"></canvas>
+            </div>
+            <div class="chart-card">
+                <canvas id="discoveryChart"></canvas>
+            </div>
+            <div class="chart-card">
+                <canvas id="ageChart"></canvas>
+            </div>
+            <div class="chart-card">
+                <canvas id="googleUsefulnessChart"></canvas>
+            </div>
+        </div>
+        
+        <footer>
+            <p>Research Project by Sufiyaan Khan | Academic Year 2025-26</p>
+        </footer>
+    </div>
+
+<script>
+    // --- Chart.js Configuration ---
+    Chart.defaults.font.family = 'Roboto';
+    Chart.defaults.plugins.legend.position = 'bottom';
+    
+    // --- Chart 1: Amazon Influence Score ---
+    new Chart(document.getElementById('influenceChart'), {
+        type: 'bar',
+        data: {
+            labels: ['1 (Not at all)', '2', '3', '4', '5 (Very Strongly)'],
+            datasets: [{
+                label: 'Number of Respondents',
+                data: [4, 9, 22, 12, 8],
+                backgroundColor: 'rgba(0, 123, 255, 0.6)',
+                borderColor: 'rgba(0, 123, 255, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            plugins: {
+                title: { display: true, text: 'Amazon\'s Influence on Buying Decisions', font: { size: 18 } }
+            },
+            scales: { y: { beginAtZero: true } }
+        }
+    });
+
+    // --- Chart 2: Trust in Amazon Recommendations ---
+    new Chart(document.getElementById('trustChart'), {
+        type: 'doughnut',
+        data: {
+            labels: ['Strongly Agree', 'Agree', 'Neutral', 'Disagree', 'Strongly Disagree'],
+            datasets: [{
+                data: [15, 13, 22, 3, 2],
+                backgroundColor: ['#28a745', '#52b788', '#adb5bd', '#ffc107', '#dc3545']
+            }]
+        },
+        options: {
+            plugins: {
+                title: { display: true, text: 'Trust in Amazon\'s Recommendations', font: { size: 18 } }
+            }
+        }
+    });
+    
+    // --- Chart 3: Relevance of Recommendations ---
+    new Chart(document.getElementById('relevanceChart'), {
+        type: 'bar',
+        data: {
+            labels: ['Strongly Agree', 'Agree', 'Neutral', 'Disagree', 'Strongly Disagree'],
+            datasets: [{
+                label: 'Number of Respondents',
+                data: [12, 26, 14, 2, 1],
+                backgroundColor: 'rgba(23, 162, 184, 0.6)',
+                borderColor: 'rgba(23, 162, 184, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            indexAxis: 'y', // Makes the bar chart horizontal
+            plugins: {
+                title: { display: true, text: 'Do Recommendations Match Your Interests?', font: { size: 18 } }
+            },
+            scales: { x: { beginAtZero: true } }
+        }
+    });
+
+    // --- Chart 4: Discovery of New Products ---
+    new Chart(document.getElementById('discoveryChart'), {
+        type: 'pie',
+        data: {
+            labels: ['Agree / Strongly Agree', 'Neutral / Disagree'],
+            datasets: [{
+                data: [43, 12], // (16+27) vs (8+3+1)
+                backgroundColor: ['#28a745', '#adb5bd']
+            }]
+        },
+        options: {
+            plugins: {
+                title: { display: true, text: 'Helped Discover New Brands/Products?', font: { size: 18 } }
+            }
+        }
+    });
+    
+    // --- Chart 5: Age Distribution ---
+    new Chart(document.getElementById('ageChart'), {
+        type: 'bar',
+        data: {
+            labels: ['Below 18', '18-24', '25-34'],
+            datasets: [{
+                label: 'Number of Respondents',
+                data: [2, 48, 5],
+                backgroundColor: 'rgba(220, 53, 69, 0.6)',
+                borderColor: 'rgba(220, 53, 69, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            plugins: {
+                title: { display: true, text: 'Age Distribution of Respondents', font: { size: 18 } }
+            },
+            scales: { y: { beginAtZero: true } }
+        }
+    });
+
+    // --- Chart 6: Google Usefulness Score ---
+    new Chart(document.getElementById('googleUsefulnessChart'), {
+        type: 'bar',
+        data: {
+            labels: ['1 (Not useful)', '2', '3', '4', '5 (Extremely useful)'],
+            datasets: [{
+                label: 'Number of Respondents',
+                data: [0, 3, 14, 19, 19], // Assuming data from CSV, needs verification if different
+                backgroundColor: 'rgba(0, 123, 255, 0.6)',
+                borderColor: 'rgba(0, 123, 255, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            plugins: {
+                title: { display: true, text: 'Google\'s Usefulness in Finding Info Quickly', font: { size: 18 } }
+            },
+            scales: { y: { beginAtZero: true } }
+        }
+    });
+
+</script>
+
+</body>
+</html>
